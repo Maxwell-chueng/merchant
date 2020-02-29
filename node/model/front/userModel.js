@@ -1,5 +1,10 @@
-const db = require("../../tools/db");
+const db = require("../../tools/db"); 
 module.exports = {
+    async findUserPhone({phone}){
+        console.log(phone)
+        let sql = `select * from merchants where phone = "${phone}"`;
+        return db.q(sql);
+    },
     async doRegits({count,userName,pwd,phone,emial}){
     let sql = `insert into merchants (count,pwd,userName,phone,emial) values("${count}","${pwd}","${userName}","${phone}","${emial}")`;
         return await db.q(sql);

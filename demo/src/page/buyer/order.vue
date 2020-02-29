@@ -88,7 +88,6 @@ export default {
       }
     },
     async getOrder() {
-      console.log(this.userId);
       let order = await this.axios.post("api/order", {
         id: this.userId
       })

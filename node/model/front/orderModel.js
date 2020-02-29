@@ -17,12 +17,12 @@ module.exports = {
         let sql = `select * from merchants where id = "${user}"`;
         return await db.q(sql);
     },
-    async getCount(){
-        let sql = `select count(id) as count from indent`;
+    async getCount({id}){
+        let sql = `select count(id) as count from indent where userId = ${id}`;
 		return await db.q(sql);
     },
-    async getList({pageNo,singlePageNum}){
-        let sql = `select * from indent order by id desc limit ${pageNo}, ${singlePageNum} `;
+    async getList({pageNo,singlePageNum,id}){
+        let sql = `select * from indent where userId = ${id} order by id desc limit ${pageNo}, ${singlePageNum} `;
     return await db.q(sql);
     }
 }

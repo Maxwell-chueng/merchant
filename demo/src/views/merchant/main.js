@@ -6,7 +6,7 @@ import "../../../static/css/reset.css"
 import 'element-ui/lib/theme-chalk/index.css'
 import store from "../../store/merchant/index.js"
 import App from './App'
-
+import 'babel-polyfill';
 axios.defaults.baseURL = "http://120.76.245.251:10086";
 Vue.prototype.axios = axios
 // 拦截器

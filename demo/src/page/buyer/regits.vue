@@ -45,7 +45,8 @@ export default {
        emialRight:false,
        emialWrong:false,
        phoneRight:false,
-       phoneWrong:false
+       phoneWrong:false,
+       flag:-1
     }
   },
   methods:{
@@ -61,22 +62,32 @@ export default {
        }else if(this.pwd == ""){
              this.$alert("密码不可为空","提示")
        }else{
-         // this.phone = this.phone.substr(0, 3) + '****' + this.phone.substr(7);
-         let result = await this.axios.post('/api/regits',{
-             pwd:this.pwd,
-             userName:this.userName,
-             phone:this.phone,
-             emial:this.emial
-         });
-          this.$alert(`账号不可更改,您的账号为:${result.data.count}`, "提示", {
-          confirmButtonText: '确定',
-          callback: action => {
-               this.isFromRegits();
-               this.$router.push({
-                path:"/login"
-               })
-          }
-        });
+         let isPhoneExist = await this.axios.post('/api/findUserPhone',{
+            phone:this.phone
+         })
+         let {state} = isPhoneExist.data;
+         if(state == 1){
+             let result = await this.axios.post('/api/regits',{
+                 pwd:this.pwd,
+                 userName:this.userName,
+                 phone:this.phone,
+                 emial:this.emial
+             });
+              this.$alert(`账号不可更改,您的账号为:${result.data.count}`, "提示", {
+              confirmButtonText: '确定',
+              callback: action => {
+                   this.isFromRegits();
+                   this.$router.push({
+                    path:"/login"
+                   })
+              }
+            });
+         }else{
+              clearInterval(this.flag);
+              this.flag = setTimeout(()=>{
+                this.$message('手机号已存在');
+              }, 500);
+         }
        }
 
     },

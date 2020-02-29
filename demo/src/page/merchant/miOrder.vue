@@ -99,9 +99,6 @@
 		created(){
 			this.getOrder();
 		},
-		beforeUpdate(){
-			this.getOrder();
-		},
         data(){
         	return{
                 order:"",
@@ -140,11 +137,14 @@
         	async changeSateInBack(val,index){
         		let goodId = val.obj.id;
         		let versionId = val.obj.version.id;
-        		await this.axios.post("/api/back/order/changeState",{
-        			goodId:goodId,
-        			versionId:versionId,
-        			orderId:this.orderId
+        		let result = await this.axios("/api/back/order/changeState",{
+        			params:{
+	        			goodId:goodId,
+	        			versionId:versionId,
+	        			orderId:this.orderId
+        			}
         		})
+                this.getOrder();
         	}
         },
         computed:{

@@ -40,6 +40,7 @@ export default {
       childDatas: [],
       i: 0,
       isShow: true,
+      flag:-1
       // isLiShow: false,
     }
   },
@@ -63,17 +64,6 @@ export default {
       //   }
       // })
     },
-    beforeEnter(el) {
-      // this.$refs.child.style.zIndex = "100"
-    },
-    beforeLeave(el) {
-      // this.isLiShow = false;
-      // // console.log(this.$refs.list)
-      // // console.log("y8yyyyyyy")
-    },
-    afterEnter() {
-      // this.isLiShow = true;
-    },
     move(index) {
       this.i = index;
       // this.isShow = true;
@@ -81,14 +71,20 @@ export default {
       
     },
     enter() {
-      TweenMax.to("#child", .3, { display: "block" ,height:230,onComplete:function(){
-        TweenMax.to("#list", 0, { display: "block" })
-      }})
+        clearInterval(this.flag);
+        this.flag = setTimeout(()=>{
+                TweenMax.to("#child", .3, { display: "block" ,height:230,onComplete:function(){
+                TweenMax.to("#list", 0, { display: "block" })
+              }})
+        },300)
     },
     leave() {
-      TweenMax.to("#child", .3, {display: "none", height:0,onStart:function(){
-        TweenMax.to("#list",0, { display: "none" })
-      }})
+      clearInterval(this.flag);
+      this.flag = setTimeout(()=>{
+        TweenMax.to("#child", .3, {display: "none", height:0,onStart:function(){
+          TweenMax.to("#list",0, { display: "none" })
+        }})
+      },0);
     },
     async getChildData() {
       let result = await this.axios("/api/findNavGood");

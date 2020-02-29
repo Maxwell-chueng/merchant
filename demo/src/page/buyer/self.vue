@@ -9,7 +9,8 @@
 			  :data = {id:userId}
 			  :show-file-list="false"
 			  :on-success="handleAvatarSuccess"
-			  :before-upload="beforeAvatarUpload">
+			  :before-upload="beforeAvatarUpload"
+			  >
 			  <img v-if="this.userData.length>0 && this.userData[0].header !== ''" :src="this.userData[0].header" class="avatar">
 			  <img v-else :src="imageUrl" alt="">
 			  <!-- <i v-else="imageUrl" class="el-icon-plus avatar-uploader-icon"></i> -->
@@ -69,11 +70,15 @@
             this.getUserName();
             this.getUserData();
 		},
-		beforeUpdate(){
-			this.getUserData();
-		},
+		// beforeUpdate(){
+		// 	this.getUserData();
+		// },
 		methods:{
             ...mapActions(["doLoginCookie"]),
+            // 上传头像成功的callback
+            upLoadSuccess(){
+            	
+            },
             async topUp(value){
                 await this.axios.post("/api/topUp",{
                 	money:value,
@@ -152,6 +157,7 @@
             },
              handleAvatarSuccess(res, file) {
 		        this.imageUrl = URL.createObjectURL(file.raw);
+		        this.$router.go(0);
 		        this.$message("修改成功");
 		      },
 		      beforeAvatarUpload(file) {

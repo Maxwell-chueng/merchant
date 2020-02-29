@@ -10,6 +10,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import qs from "qs"
 import store from "../../store/buyer/index.js"
 import animated from 'animate.css'
+import 'babel-polyfill';
 // 使用animate动画库
 Vue.use(animated);
 Vue.prototype.axios = axios
@@ -39,7 +40,7 @@ router.beforeEach((to,from,next)=>{
   }
   next();
 })
-new Vue({
+let vm = new Vue({
   el: '#app',
   router,
   store,

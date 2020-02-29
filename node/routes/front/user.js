@@ -11,4 +11,5 @@ userRouter.post("/userData",userController.getUserData);
 userRouter.post("/edit",userController.doEdit);
 userRouter.post("/editImg",userController.editImg);
 userRouter.post("/topUp",userController.topUp);
+userRouter.post("/findUserPhone",userController.findUserPhone);
 module.exports = userRouter;

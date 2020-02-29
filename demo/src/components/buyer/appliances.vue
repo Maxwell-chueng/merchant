@@ -109,7 +109,7 @@ export default {
 
     li {
       width: 18%;
-      height: 45%;
+      height: 282px;
       margin: 10px 20px 10px 0px;
       background-color: #ffffff;
       cursor: pointer;

@@ -11,7 +11,7 @@ module.exports = {
         let balance = result[0].balance;
         balance = balance - money;
         await orderModel.decreaseUserMoney({balance,user});
-        res.send();
+        res.send(); 
     },
     async getOrder(req,res){
         let {id} = req.body;
@@ -27,12 +27,13 @@ module.exports = {
         res.send(result);
     },
     async getCount(req,res){
-        let count = await orderModel.getCount();
+        let {id} = req.query;
+        let count = await orderModel.getCount({id});
         res.send(count);
     },
     async page(req,res){
-        let {pageNo,singlePageNum} = req.query;
-        let result = await orderModel.getList({pageNo,singlePageNum});
+        let {pageNo,singlePageNum,id} = req.query;
+        let result = await orderModel.getList({pageNo,singlePageNum,id});
         for(let i=0;i<result.length;i++){
             // 利用切割字符串中表示换行的/n和空格的/g
             result[i].address = result[i].address.replace(/[\r\n]/g,"");

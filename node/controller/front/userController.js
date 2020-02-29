@@ -2,6 +2,24 @@ const userModel = require("../../model/front/userModel");
 const fs = require("fs");
 const path = require("path");
 module.exports = {
+    async findUserPhone(req,res){
+        let {phone} = req.body;
+        let result = await userModel.findUserPhone({phone});
+        let msg = {};
+        console.log(result.length)
+        if(result.length == 0){
+            msg = {
+                state:'1',
+                info:'手机号不存在'
+            };
+        }else{
+            msg = {
+                state:'-1',
+                info:'手机号存在'
+            }
+        }
+        res.send(msg);
+    },
     async regits(req,res){
         let {userName,pwd,phone,emial} = req.body;
         let count = Math.floor(Math.random()*10000000000+1);
@@ -85,7 +103,7 @@ module.exports = {
             fs.rename(file.path, newPathName, (error, data) => {});
             // 当名字修改好后，再来将这个图片的存放路径保存到数据库中
             let newFileName = file.filename + ext;
-            newFileName = 'http://localhost:10086/' + newFileName;
+            newFileName = 'http://120.76.245.251:10086/' + newFileName;
             await userModel.addImg({
                 id,
                 newFileName

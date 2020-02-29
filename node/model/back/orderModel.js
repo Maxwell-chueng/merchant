@@ -8,6 +8,6 @@ module.exports = {
     },
     async delivery({orderId,good}){
         let sql = `update indent set good = '${good}' where id = '${orderId}'`;
-        return db.q(sql);
+        return await db.q(sql);
     }
 }
